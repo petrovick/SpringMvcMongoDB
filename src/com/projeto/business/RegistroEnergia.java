@@ -7,33 +7,54 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class RegistroEnergia {
 	@Id
 	private String id;
-	private Float valor;
-	private Cliente cliente;
-	
-	public RegistroEnergia(){}
-	
-	public RegistroEnergia(String id, Float valor, Cliente cliente) {
+    private String dataHora;
+    private Long kws;
+    private Usuario user;
+
+    public RegistroEnergia() { }
+
+    public RegistroEnergia(String id, String dataHora, Long kws, Usuario user) {
 		super();
 		this.id = id;
-		this.valor = valor;
-		this.cliente = cliente;
+		this.dataHora = dataHora;
+		this.kws = kws;
+		this.user = user;
 	}
+    
+    public String getDataHora() {
+        return dataHora;
+    }
+
+    public void setDataHora(String dataHora) {
+        this.dataHora = dataHora;
+    }
+
+    public Long getKws() {
+        return kws;
+    }
+
+    public void setKws(Long kws) {
+        this.kws = kws;
+    }
+
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
-	public Float getValor() {
-		return valor;
+
+	public Usuario getUser() {
+		return user;
 	}
-	public void setValor(Float valor) {
-		this.valor = valor;
+
+	public void setUser(Usuario user) {
+		this.user = user;
 	}
-	public Cliente getCliente() {
-		return cliente;
-	}
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+
+	@Override
+	public String toString() {
+		return "[dataHora=" + dataHora + ", kws=" + kws + "]";
 	}
 }
