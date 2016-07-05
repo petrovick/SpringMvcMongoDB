@@ -1,6 +1,8 @@
 package com.projeto.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,16 +15,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.projeto.business.Casa;
 import com.projeto.business.Cliente;
 import com.projeto.business.RegistroEnergia;
 import com.projeto.business.Usuario;
 import com.projeto.repository.UsuarioRepository;
 import com.projeto.request.LoginRequest;
+import com.projeto.request.UsuarioRequest;
 import com.spring.response.LoginResponse;
+import com.spring.response.UsuarioResponse;
 
-@RequestMapping("/service/login")
+@RequestMapping("/service/usuario")
 @Controller
-public class LoginController
+public class UsuarioController
 {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
@@ -33,45 +38,36 @@ public class LoginController
 		return "teste";
 	}
 	
-	@RequestMapping(value = "/cadastrar", 
+	@RequestMapping(value = "/cadastrarCasa", 
 			consumes="application/json",
 			produces = "application/json",
 			method = RequestMethod.POST)
 	@ResponseBody
-	public LoginResponse cadastrar(@RequestBody LoginRequest request)
+	public UsuarioResponse cadastrarCasa(@RequestBody UsuarioRequest request)
 	{
-		LoginResponse response = new LoginResponse();
+		UsuarioResponse response = new UsuarioResponse();
 		try
 		{
-			String token = Double.toString(new Date().getTime() / 10.0 * 44.0);
-			Usuario usuario = usuarioRepository.findBytoken(request.getUsuario().getEmail());
+			Usuario usuario = usuarioRepository.findBytoken(request.getUsuario().getToken());
 			if(usuario == null)
 			{
-				usuario = request.getUsuario();
-				usuario = usuarioRepository.save(usuario);
-				if(usuario == null)
-				{
-					throw new Exception("Erro ao salvar usuário.");
-				}
-				else
-				{
-					response.setStatus(200);
-					response.setToken(token);
-					response.setMessage("Salvo com sucesso.");
-					response.setEmail(usuario.getEmail());
-				}
+				response.setStatus(407);
+				response.setMessage("Usuário não autenticado.");
+				return response;
 			}
-			else if(usuario.getPassword().equals(request.getUsuario().getPassword()))
+			List<Casa> casas = usuario.getCasas();
+			if(casas == null)
+				casas = new ArrayList<Casa>();
+			casas.addAll(request.getUsuario().getCasas());
+			usuario.setCasas(casas);
+			usuario = usuarioRepository.save(usuario);
+			if(usuario == null)
 			{
-				response.setStatus(200);
-				response.setToken(token);
-				response.setMessage("Salvo com sucesso.");
-				response.setEmail(usuario.getEmail());
+				throw new Exception("Erro ao salvar usuário!");
 			}
-			else
-			{
-				throw new Exception("Usuário ou senha incorretos.");
-			}
+			response.setMessage("Salvo com sucesso!");
+			response.setStatus(200);
+			response.setUsuario(usuario);
 		}
 		catch(Exception ex)
 		{

@@ -79,7 +79,7 @@
 				//Calculado
 			    $('#containerCalculado').highcharts({
 			        chart: {
-			            type: 'line'
+			            type: 'column'
 			        },
 			        title: {
 			            text: 'Diferença de consumo por registro'

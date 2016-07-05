@@ -1,6 +1,7 @@
 package com.projeto.business;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "registroenergia")
@@ -9,6 +10,7 @@ public class RegistroEnergia {
 	private String id;
     private String dataHora;
     private Long kws;
+    @DBRef
     private Usuario user;
 
     public RegistroEnergia() { }

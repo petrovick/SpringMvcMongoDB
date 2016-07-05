@@ -29,7 +29,7 @@ public class HomeController {
 	@Autowired
 	private RegistroEnergiaRepository registroEnergiaRepository;
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String helloWorld(@RequestParam String email, ModelMap model) throws JsonGenerationException, JsonMappingException, IOException {
 		List<RegistroEnergia> energias = registroEnergiaRepository.findByUserEmail(email);
 		
