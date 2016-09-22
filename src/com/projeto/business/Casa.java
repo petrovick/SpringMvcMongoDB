@@ -1,24 +1,30 @@
 package com.projeto.business;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "casa")
 public class Casa
 {
+	@Id
+	private String id;
 	private String logradouro;
 	private String numero;
 	private String bairro;
 	private String cidade;
 	private String uf;
 	public Casa() { }
-	public Casa(String logradouro, String numero, String bairro, String cidade, String uf) {
+	
+	public Casa(String id, String logradouro, String numero, String bairro, String cidade, String uf) {
 		super();
+		this.id = id;
 		this.logradouro = logradouro;
 		this.numero = numero;
 		this.bairro = bairro;
 		this.cidade = cidade;
 		this.uf = uf;
 	}
+
 	public String getLogradouro() {
 		return logradouro;
 	}
@@ -48,6 +54,14 @@ public class Casa
 	}
 	public void setUf(String uf) {
 		this.uf = uf;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 }

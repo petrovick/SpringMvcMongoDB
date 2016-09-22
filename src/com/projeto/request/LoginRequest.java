@@ -1,22 +1,33 @@
 package com.projeto.request;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.projeto.business.Usuario;
+
 @XmlRootElement
-public class LoginRequest 
+public class LoginRequest  implements Serializable
 {
-	private String email;
-	private String senha;
-	public String getEmail() {
-		return email;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4690653598842264524L;
+	private Usuario usuario;
+
+	public LoginRequest(){}
+	
+	public LoginRequest(Usuario usuario) {
+		super();
+		this.usuario = usuario;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+
+	public Usuario getUsuario() {
+		return usuario;
 	}
-	public String getSenha() {
-		return senha;
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
+	
 }
