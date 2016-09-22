@@ -1,17 +1,24 @@
 package com.projeto.business;
 
+import java.io.Serializable;
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "usuario")
-public class Usuario {
+public class Usuario implements Serializable
+{
+	private static final long serialVersionUID = -5394553915345572122L;
+	@Id
+	private String id;
 	private String email;
 
 	private String password;
 	
 	private String token;
-	
+	@DBRef
 	private List<Casa> casas;
 	
 	public Usuario() { }

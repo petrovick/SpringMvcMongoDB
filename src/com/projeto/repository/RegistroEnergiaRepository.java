@@ -14,6 +14,7 @@ import com.projeto.business.Usuario;
 public interface RegistroEnergiaRepository extends MongoRepository<RegistroEnergia, String>{
 	
 	public List<RegistroEnergia> findByDataHora(String dataHora);
+	public List<RegistroEnergia> findByUser(Usuario usuario);
 	public List<RegistroEnergia> findByUserEmail(String email);
 	
 }

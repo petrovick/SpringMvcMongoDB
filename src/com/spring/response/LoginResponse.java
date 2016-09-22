@@ -2,15 +2,19 @@ package com.spring.response;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.projeto.business.Usuario;
+
 @XmlRootElement
 public class LoginResponse extends BaseResponse
 {
-	private String email;
-	public String getEmail() {
-		return email;
+	private Usuario usuario;
+
+	public Usuario getUsuario() {
+		return usuario;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	
 }

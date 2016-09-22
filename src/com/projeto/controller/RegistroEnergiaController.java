@@ -1,5 +1,8 @@
 package com.projeto.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -54,14 +57,27 @@ public class RegistroEnergiaController
 			{
 				for(RegistroEnergiaDTO reDTO : request.getValores()){
 					RegistroEnergia re  = new RegistroEnergia(null, reDTO.getDataHora(),
-							reDTO.getKws(), 
+							reDTO.getKws(),
+							reDTO.getCasa(),
 							user);
 					registroEnergiaRepository.save(re);
 				}
 			}
 			response.setStatus(200);
 			response.setMessage("Salvo com sucesso");
-		}
+			List<RegistroEnergiaDTO> registrosDTO = new ArrayList<RegistroEnergiaDTO>();
+			List<RegistroEnergia> registros = registroEnergiaRepository.findByUser(user);
+			for(RegistroEnergia registro : registros){
+				RegistroEnergiaDTO reDTO = new RegistroEnergiaDTO(
+						registro.getId(),
+						registro.getDataHora(),
+						registro.getKws(),
+						registro.getUser().getEmail(),
+						registro.getCasa());
+				registrosDTO.add(reDTO);
+			}
+			response.setRegistros(registrosDTO);
+		} 
 		catch(Exception ex)
 		{
 			response.setStatus(500);
